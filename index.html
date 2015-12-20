@@ -1,0 +1,48 @@
+<!DOCTYPE>
+
+<html>
+	<head>
+        <link href='https://fonts.googleapis.com/css?family=Playfair+Display:900italic' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="user_stories.css">
+		<script src="https://code.angularjs.org/1.4.8/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.4.8/angular-resource.min.js"></script>
+	</head>
+	<body style="background-color:#EDEAC2">
+        <h1 class="text-center">FreeCodeCamp</h1>
+        <h2 class="text-center">Camper News</h2>
+        <!--main view for campNewsApp module-->	
+        <div ng-app='campNewsApp' class='container'>
+            <!--maincontroller-->
+            <div class="maincontdiv" ng-controller='maincontroller'>
+                <!--generating row with counter array-->
+                <div class="row" ng-repeat='elem in counter'>
+                    <!--generating 6 columns for each row with ar array-->
+                    <div class="col-md-2" ng-repeat='el in ar[counter[elem]]'>
+                        <div class="text-center everyusersdiv">
+                            <!--image of user wrapped in link tag-->
+                            <a href={{usersAPI[el].link}} style="text-decoration: none" target="_blank">
+                            <img src={{usersAPI[el].author.picture}} class="img-rounded" alt="Cinque Terre">
+                        <br>
+                            <!--showing headline text from API depending its length-->
+                            <p ng-if='usersAPI[el].headline.length<=20'>{{usersAPI[el].headline}}</p>
+                            <p ng-if='usersAPI[el].headline.length>20'>{{usersAPI[el].headline.slice(0,17)}}...</p>
+                            </a>
+                            <p>
+                                <!--author username wrapped in link tag-->
+                                author: <a href="http://www.freecodecamp.com/{{usersAPI[el].author.username}}" target="_blank" style="text-decoration: none; color: grey;">{{usersAPI[el].author.username}}
+                                </a>
+                            </p>
+                            <!--posted time of news-->
+                            <p>posted: {{usersAPI[el].timePosted | date : 'mediumDate'}}</p>
+                            <!--vote paragraph with like glyphicon and "vote/votes" words depending on 
+quantity of voters-->
+                            <p id="votepar"><span ng-if='usersAPI[el].rank>0' class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> {{usersAPI[el].rank}} <span ng-if='usersAPI[el].rank===1'>Vote</span><span ng-if='usersAPI[el].rank>1'>Votes</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src='user_stories.js'></script>
+	</body>
+</html>
